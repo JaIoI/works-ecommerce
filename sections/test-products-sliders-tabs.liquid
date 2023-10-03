@@ -1,0 +1,45 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{% stylesheet %}
+  .display-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+  }
+{% endstylesheet %}
+
+{% liquid
+  assign collection_one = collections['collection-one']
+  assign collection_two = collections['collection-two']
+%}
+
+<div class="page-width">
+  <h2>Test products sliders tabs</h2>
+  <h3>{{ collection_one.title }}</h3>
+  
+  <div class="display-grid-4">
+    {% for product in collection_one.products %}
+
+        {% render 'card-product', card_product: product, show_quick_add: true %}
+
+    {% endfor %}
+  </div>
+
+  <h3>{{ collection_two.title }}</h3>
+  
+  <div class="display-grid-4">
+    {% for product in collection_two.products %}
+      {% render 'card-product', card_product: product, show_quick_add: true %}
+    {% endfor %}
+  </div>
+
+</div>
+{% schema %}
+  {
+    "name": "Products sliders tabs",
+    "settings": []
+  }
+{% endschema %}
