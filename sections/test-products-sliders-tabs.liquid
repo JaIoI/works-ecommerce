@@ -1,5 +1,7 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
@@ -9,7 +11,30 @@
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 2rem;
   }
+  .slick-slide {
+    margin: 1rem;
+  }
+  .slick-prev:before, .slick-next:before {
+    color: #000;
+  }
+  .tab {
+    display: none;
+  }
+  .tab--active {
+    display: block;
+  }
+  .tabs__buttons {
+    border-bottom: 0.1rem solid rgba(var(--color-foreground),.08);
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+
 {% endstylesheet %}
+
 
 {% liquid
   assign collection_one = collections['collection-one']
@@ -17,29 +42,140 @@
 %}
 
 <div class="page-width">
-  <h2>Test products sliders tabs</h2>
-  <h3>{{ collection_one.title }}</h3>
-  
-  <div class="display-grid-4">
-    {% for product in collection_one.products %}
+  {% if section.settings.slider_heading %}
+    <h2>{{ section.settings.slider_heading }}</h2>
+  {% endif %}
 
-        {% render 'card-product', card_product: product, show_quick_add: true %}
+  <div class="tabs">
+    <div class="tabs__buttons {% if section.settings.tabs_pos == 'center' %}text-center{% elsif section.settings.tabs_pos == 'right' %}text-right -%}{% endif %}">
+      <button type="button" class="tabs__button button">{{ collection_one.title }}</button>
+      <button type="button" class="tabs__button button button--secondary">{{ collection_two.title }}</button>
+    </div>
 
-    {% endfor %}
+    <div class="tabs__inner">
+      <div class="tab tab--active">
+        <div class="slick-slider">
+          {% for product in collection_one.products %}
+            {% render 'card-product-custom', card_product: product, show_quick_add: true %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="tab">
+        <div class="slick-slider">
+          {% for product in collection_two.products %}
+            {% render 'card-product-custom', card_product: product, show_quick_add: true %}
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
   </div>
-
-  <h3>{{ collection_two.title }}</h3>
-  
-  <div class="display-grid-4">
-    {% for product in collection_two.products %}
-      {% render 'card-product', card_product: product, show_quick_add: true %}
-    {% endfor %}
-  </div>
-
 </div>
+
+
+<script>
+
+function sliderInit() {
+  $('.slick-slider').slick({
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 749,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+      // You can unslick at a given breakpoint now by adding:
+      // settings: "unslick"
+      // instead of a settings object
+    ]
+  });
+}
+
+sliderInit();
+
+$('.tabs__button').each(function(index, elem) {
+  const $elem = $(elem);
+
+  $elem.on('click', function(evt) {
+    const $tabs = $elem.closest('.tabs').find('.tab');
+
+    $('.tabs__button').addClass('button--secondary');
+    $elem.removeClass('button--secondary');
+    $tabs.removeClass('tab--active');
+    $($tabs[index]).addClass('tab--active');
+    $('.slick-slider')[index].slick.refresh();
+  });
+});
+
+document.addEventListener('shopify:section:load', function(event) {
+  sliderInit();
+});
+
+</script>
+
 {% schema %}
   {
     "name": "Products sliders tabs",
-    "settings": []
+    "settings": [
+      {
+        "type": "text",
+        "id": "slider_heading",
+        "label": "Heading",
+        "default": "Test products sliders tabs"
+      },
+      {
+        "type": "select",
+        "id": "tabs_pos",
+        "label": "Tabs position",
+        "options": [
+          {
+            "value": "left",
+            "label": "left"
+          },
+          {
+            "value": "center",
+            "label": "center"
+          },
+          {
+            "value": "right",
+            "label": "right"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Badge colors"
+      },
+      {
+        "type": "color",
+        "id": "badge_color",
+        "label": "Badge text color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "badge_background",
+        "label": "Badge background",
+        "default": "#FF9500"
+      },
+      {
+        "type": "color",
+        "id": "badge_border_color",
+        "label": "Badge border color",
+        "default": "transparent"
+      }
+    ]
   }
 {% endschema %}
