@@ -1,11 +1,14 @@
 {
 	"sections": {
 		"test_products_sliders_tabs": {
-			"type": "test-products-sliders-tabs",
-			"settings": {}
+			"type": "test-products-sliders-tabs"
+		},
+		"custom_block": {
+			"type": "custom-block"
 		}
 	},
 	"order": [
+		"custom_block",
 		"test_products_sliders_tabs"
 	]
 }

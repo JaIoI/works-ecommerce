@@ -1,0 +1,29 @@
+<section class="custom-block">
+  <div class="page-width">
+    <div class="custom-block__container">
+      <div class="custom-block__inner">
+        <div class="custom-block__bg">
+          {% render 'custom-block-ring' %}
+        </div>
+        <div class="custom-block__title">Text one</div>
+        <div class="custom-block__title">Text two</div>
+        <div class="custom-block__title">Text three</div>
+        <div class="custom-block__line">
+          {% render 'custom-block-line' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom block",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Custom block"
+    }
+  ]
+}
+{% endschema %}
