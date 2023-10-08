@@ -1,14 +1,59 @@
 {
-	"sections": {
-		"test_products_sliders_tabs": {
-			"type": "test-products-sliders-tabs"
-		},
-		"custom_block": {
-			"type": "custom-block"
-		}
-	},
-	"order": [
-		"custom_block",
-		"test_products_sliders_tabs"
-	]
+  "sections": {
+    "custom_block": {
+      "type": "custom-block",
+      "blocks": {
+        "256586e2-9b21-45ad-9f0d-66e014405e6b": {
+          "type": "title",
+          "settings": {
+            "text": "Text one"
+          }
+        },
+        "4b143030-3b33-4498-afaf-acb4a4266bcf": {
+          "type": "title",
+          "settings": {
+            "text": "Text two"
+          }
+        },
+        "7e295d7a-a966-468c-ae81-8e427bc9a7bb": {
+          "type": "title",
+          "settings": {
+            "text": "Text three"
+          }
+        },
+        "83afd02d-9975-4e4c-a479-8311af7e76db": {
+          "type": "link",
+          "settings": {
+            "link_text": "Learn more",
+            "link_url": "#"
+          }
+        }
+      },
+      "block_order": [
+        "256586e2-9b21-45ad-9f0d-66e014405e6b",
+        "4b143030-3b33-4498-afaf-acb4a4266bcf",
+        "7e295d7a-a966-468c-ae81-8e427bc9a7bb",
+        "83afd02d-9975-4e4c-a479-8311af7e76db"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/custom-block-img.png",
+        "font": "nunito_n8"
+      }
+    },
+    "test_products_sliders_tabs": {
+      "type": "test-products-sliders-tabs",
+      "settings": {
+        "slider_heading": "Test products sliders tabs",
+        "tabs_pos": "left",
+        "button_color": "#ffffff",
+        "button_background": "#5d1dfb",
+        "badge_color": "#000000",
+        "badge_background": "#ff9500"
+      }
+    }
+  },
+  "order": [
+    "custom_block",
+    "test_products_sliders_tabs"
+  ]
 }
