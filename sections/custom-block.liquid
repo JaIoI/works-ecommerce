@@ -5,9 +5,11 @@
     <div class="custom-block__container">
       <div class="custom-block__titles">
         {% for block in section.blocks %}
-          <div class="custom-block__title" style="color: {{ block.settings.color }}">
-            {{ block.settings.text }}
-          </div>
+          {% if block.type.title %}
+            <div class="custom-block__title" style="color: {{ block.settings.color }}">
+              {{ block.settings.text }}
+            </div>
+          {% endif %}
         {% endfor %}
         {% if section.blocks.size > 0 %}
           <div class="custom-block__bg">
@@ -24,7 +26,9 @@
         </div>
       {% endif %}
       {% for block in section.blocks %}
-        <a href="{{ block.settings.link_url }}" class="custom-block__button">{{ block.settings.link_text }}</a>
+        {% if block.type.link %}
+          <a href="{{ block.settings.link_url }}" class="custom-block__button">{{ block.settings.link_text }}</a>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
