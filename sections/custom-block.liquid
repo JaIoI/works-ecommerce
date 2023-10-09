@@ -9,16 +9,20 @@
             {{ block.settings.text }}
           </div>
         {% endfor %}
-        <div class="custom-block__bg">
-          {% render 'custom-block-ring' %}
-        </div>
+        {% if section.blocks.size > 0 %}
+          <div class="custom-block__bg">
+            {% render 'custom-block-ring' %}
+          </div>
+        {% endif %}
       </div>
       <div class="custom-block__line">
         {% render 'custom-block-line' %}
       </div>
-      <div class="custom-block__img">
-        {{ section.settings.image | image_url: width: auto | image_tag }}
-      </div>
+      {% if section.settings.image != _blank %}
+        <div class="custom-block__img">
+          {{ section.settings.image | image_url: width: auto | image_tag }}
+        </div>
+      {% endif %}
       {% for block in section.blocks %}
         <a href="{{ block.settings.link_url }}" class="custom-block__button">{{ block.settings.link_text }}</a>
       {% endfor %}
@@ -87,13 +91,7 @@
   ],
   "presets": [
     {
-      "name": "Custom block",
-      "blocks": [
-        {
-          "type": "title",
-          "type": "link"
-        }
-      ]
+      "name": "Custom block"
     }
   ]
 }
