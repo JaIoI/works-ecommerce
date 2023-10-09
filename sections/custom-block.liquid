@@ -5,7 +5,7 @@
     <div class="custom-block__container">
       <div class="custom-block__titles">
         {% for block in section.blocks %}
-          {% if block.type.title %}
+          {% if block.type == 'title' %}
             <div class="custom-block__title" style="color: {{ block.settings.color }}">
               {{ block.settings.text }}
             </div>
@@ -26,7 +26,7 @@
         </div>
       {% endif %}
       {% for block in section.blocks %}
-        {% if block.type.link %}
+        {% if block.type == 'link' %}
           <a href="{{ block.settings.link_url }}" class="custom-block__button">{{ block.settings.link_text }}</a>
         {% endif %}
       {% endfor %}
