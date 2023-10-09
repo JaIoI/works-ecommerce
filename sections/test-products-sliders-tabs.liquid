@@ -1,0 +1,211 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{% style %}
+  .slick-slide {
+    margin: 1rem;
+  }
+  .slick-prev,
+  .slick-next {
+    z-index: 2;
+  }
+  .slick-prev:before,
+  .slick-next:before {
+    color: #000;
+  }
+  .tabs {
+    margin: 2rem 0;
+  }
+  .tab {
+    display: none;
+  }
+  .tab--active {
+    display: block;
+  }
+  .tabs__buttons {
+    margin-bottom: 2rem;
+    border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .tabs__button:not(.button--secondary) {
+    color: {{ section.settings.button_color }};
+    background: {{ section.settings.button_background }};
+    }
+
+    @media(max-width: 749px) {
+      .slick-prev {
+        left: 0;
+      }
+      .slick-next {
+        right: 0;
+      }
+    }
+{% endstyle %}
+
+{% liquid
+  assign collection_one = collections['collection-one']
+  assign collection_two = collections['collection-two']
+%}
+<section class="test-products-sliders-tabs">
+  <div class="page-width">
+    {% if section.settings.slider_heading %}
+      <h2>{{ section.settings.slider_heading }}</h2>
+    {% endif %}
+
+    <div class="tabs">
+      <div class="tabs__buttons {% if section.settings.tabs_pos == 'center' %}text-center{% elsif section.settings.tabs_pos == 'right' %}text-right -%}{% endif %}">
+        <button type="button" class="tabs__button button">{{ collection_one.title }}</button>
+        <button type="button" class="tabs__button button button--secondary">{{ collection_two.title }}</button>
+      </div>
+
+      <div class="tabs__inner">
+        <div class="tab tab--active">
+          <div class="slick-slider">
+            {% for product in collection_one.products %}
+              {% render 'card-product-custom', card_product: product, show_quick_add: true %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="tab">
+          <div class="slick-slider">
+            {% for product in collection_two.products %}
+              {% render 'card-product-custom', card_product: product, show_quick_add: true %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  function sliderInit() {
+    $('.slick-slider').slick({
+      speed: 500,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1099,
+          settings: {
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: 799,
+          settings: {
+            slidesToShow: 2,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
+    });
+  }
+
+  sliderInit();
+
+  $('.tabs__button').each(function (index, elem) {
+    const $elem = $(elem);
+
+    $elem.on('click', function (evt) {
+      const $tabs = $elem.closest('.tabs').find('.tab');
+
+      $('.tabs__button').addClass('button--secondary');
+      $elem.removeClass('button--secondary');
+      $tabs.removeClass('tab--active');
+      $($tabs[index]).addClass('tab--active');
+      $('.slick-slider')[index].slick.refresh();
+    });
+  });
+
+  document.addEventListener('shopify:section:load', function (event) {
+    sliderInit();
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Products sliders tabs",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "slider_heading",
+      "label": "Heading",
+      "default": "Test products sliders tabs"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "select",
+      "id": "tabs_pos",
+      "label": "Tabs position",
+      "options": [
+        {
+          "value": "left",
+          "label": "left"
+        },
+        {
+          "value": "center",
+          "label": "center"
+        },
+        {
+          "value": "right",
+          "label": "right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Active button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Active button background",
+      "default": "#5d1dfb"
+    },
+    {
+      "type": "header",
+      "content": "Badge colors"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Badge text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Badge background",
+      "default": "#FF9500"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products sliders tabs"
+    }
+  ]
+}
+{% endschema %}

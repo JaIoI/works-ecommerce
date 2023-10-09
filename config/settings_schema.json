@@ -1241,7 +1241,7 @@
             "label": "t:settings_schema.badges.settings.position.options__4.label"
           }
         ],
-        "default": "bottom left",
+        "default": "top right",
         "label": "t:settings_schema.badges.settings.position.label"
       },
       {
