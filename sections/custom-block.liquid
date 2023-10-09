@@ -5,7 +5,7 @@
     <div class="custom-block__container">
       <div class="custom-block__titles">
         {% for block in section.blocks %}
-          <div class="custom-block__title">
+          <div class="custom-block__title" style="color: {{ block.settings.color }}">
             {{ block.settings.text }}
           </div>
         {% endfor %}
@@ -59,6 +59,12 @@
           "type": "text",
           "id": "text",
           "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color",
+          "default": "#75C882"
         }
       ]
     },

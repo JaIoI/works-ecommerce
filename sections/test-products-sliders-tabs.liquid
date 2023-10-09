@@ -5,7 +5,7 @@
 <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
-<style>
+{% style %}
   .slick-slide {
     margin: 1rem;
   }
@@ -37,21 +37,19 @@
     text-align: right;
   }
   .tabs__button:not(.button--secondary) {
-    color: {{ section.settings.button_color }}
-    ;
-    background: {{ section.settings.button_background }}
-    ;
-  }
+    color: {{ section.settings.button_color }};
+    background: {{ section.settings.button_background }};
+    }
 
-  @media(max-width: 749px) {
-    .slick-prev {
-      left: 0;
+    @media(max-width: 749px) {
+      .slick-prev {
+        left: 0;
+      }
+      .slick-next {
+        right: 0;
+      }
     }
-    .slick-next {
-      right: 0;
-    }
-  }
-</style>
+{% endstyle %}
 
 {% liquid
   assign collection_one = collections['collection-one']
@@ -90,7 +88,7 @@
   </div>
 </section>
 
-<script>
+{% javascript %}
   function sliderInit() {
     $('.slick-slider').slick({
       speed: 500,
@@ -138,7 +136,7 @@
   document.addEventListener('shopify:section:load', function (event) {
     sliderInit();
   });
-</script>
+{% endjavascript %}
 
 {% schema %}
 {

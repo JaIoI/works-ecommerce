@@ -6,19 +6,22 @@
         "256586e2-9b21-45ad-9f0d-66e014405e6b": {
           "type": "title",
           "settings": {
-            "text": "Text one"
+            "text": "Text one",
+            "color": "#664535"
           }
         },
         "4b143030-3b33-4498-afaf-acb4a4266bcf": {
           "type": "title",
           "settings": {
-            "text": "Text two"
+            "text": "Text two",
+            "color": "#75C882"
           }
         },
         "7e295d7a-a966-468c-ae81-8e427bc9a7bb": {
           "type": "title",
           "settings": {
-            "text": "Text three"
+            "text": "Text three",
+            "color": "#75C882"
           }
         },
         "83afd02d-9975-4e4c-a479-8311af7e76db": {
